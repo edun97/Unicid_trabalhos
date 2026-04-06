@@ -1,20 +1,29 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🌿 Gerador de QR Code Pro
 
-# Run and deploy your AI Studio app
+Um aplicativo web elegante, responsivo e construído com JavaScript Vanilla para gerar QR Codes altamente customizáveis. Ideal para criação de códigos para links, portfólios, cardápios e compartilhamento rápido.
 
-This contains everything you need to run your app locally.
+![Preview do Projeto](https://via.placeholder.com/800x400?text=Screenshot+do+Gerador+de+QR+Code) ## ✨ Funcionalidades
 
-View your app in AI Studio: https://ai.studio/apps/1a0c2f74-68b8-4aef-a8c1-32d72ab7698a
+Além da geração básica de QR Codes, este projeto conta com recursos avançados:
 
-## Run Locally
+* **🎨 Customização Visual:** Ajuste a escala dos pontos internos e o arredondamento dos cantos em tempo real usando sliders interativos.
+* **🖼️ Brand Integration (Upload de Logo):** Insira o logotipo da sua empresa ou marca pessoal diretamente no centro do QR Code.
+* **💾 Múltiplos Formatos de Exportação:** Baixe o arquivo gerado em `.PNG`, `.JPEG`, `.WEBP` ou `.SVG` (ideal para impressões em alta qualidade sem perda de resolução).
+* **📋 Copiar para a Área de Transferência:** Gere o código e copie a imagem com um clique direto para o seu *clipboard*, pronto para colar no WhatsApp, Figma ou redes sociais.
+* **🛡️ Validação de Dados:** Prevenção de erros com feedback visual caso o usuário tente gerar um código sem informar um texto ou link válido.
+* **📱 Design Responsivo:** Interface construída com CSS Flexbox, adaptando-se perfeitamente a dispositivos móveis e desktops, utilizando uma paleta baseada na psicologia das cores (tons naturais e terrosos).
 
-**Prerequisites:**  Node.js
+## 🚀 Tecnologias Utilizadas
 
+* **HTML5:** Estrutura semântica do aplicativo.
+* **CSS3:** Estilização, variáveis nativas (Custom Properties) e design responsivo (Flexbox).
+* **JavaScript (Vanilla):** Lógica de interface, manipulação de DOM e uso da Clipboard API.
+* **[QR Code Styling](https://qr-code-styling.com/):** Biblioteca open-source robusta para a renderização do código em SVG/Canvas.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 💻 Como usar localmente
+
+Como o projeto é feito inteiramente com tecnologias front-end nativas, não há necessidade de build ou instalação de dependências via NPM.
+
+1. Clone este repositório:
+   ```bash
+   git clone [https://github.com/seu-usuario/gerador-qrcode-pro.git](https://github.com/seu-usuario/gerador-qrcode-pro.git)
