@@ -1,13 +1,435 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code PRO - Tema Natural</title>
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <style>
+        :root {
+            --bg-sage: #C1D3C0;
+            --surface-sand: #FDF7E8;
+            --text-forest: #2C4C3B;
+            --accent-terra: #D07D5D;
+            --accent-terra-hover: #b86b4e;
+            --border-light: #d1cfc7;
+            --error-color: #d9534f;
+        }
 
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-sage);
+            color: var(--text-forest);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            color: var(--text-forest);
+        }
+
+        .app-container {
+            background-color: var(--surface-sand);
+            border-radius: 16px;
+            box-shadow: 0 12px 32px rgba(44, 76, 59, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 950px;
+            width: 100%;
+            padding: 40px;
+            gap: 40px;
+            box-sizing: border-box;
+        }
+
+        .controls-section {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-group h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-forest);
+            border-bottom: 2px solid var(--bg-sage);
+            padding-bottom: 5px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input[type="text"], select, input[type="file"] {
+            padding: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #fff;
+            color: var(--text-forest);
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            padding: 9px;
+            cursor: pointer;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--accent-terra);
+        }
+
+        /* Classes de Erro */
+        .input-error {
+            border-color: var(--error-color) !important;
+            background-color: #fff8f8 !important;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            display: none;
+            margin-top: -5px;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            background: transparent;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: #e0ddd3;
+            border-radius: 3px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: var(--accent-terra);
+            cursor: pointer;
+            margin-top: -6px;
+        }
+
+        .slider-value {
+            width: 50px !important;
+            text-align: center;
+        }
+
+        button.primary-btn, button.secondary-btn {
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            width: 100%;
+        }
+
+        button.primary-btn {
+            background-color: var(--accent-terra);
+            margin-top: 10px;
+        }
+
+        button.primary-btn:hover {
+            background-color: var(--accent-terra-hover);
+        }
+
+        button.secondary-btn {
+            background-color: var(--text-forest);
+        }
+
+        button.secondary-btn:hover {
+            background-color: #1a2e23;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .export-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .export-row select {
+            flex: 1;
+        }
+
+        .export-row button {
+            flex: 2;
+            margin-top: 0;
+        }
+
+        .preview-section {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #F7EFE0;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+
+        #qr-canvas {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                padding: 20px;
+            }
+            .export-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gerador QR Code Pro</h1>
+        <p>Crie, personalize e integre sua marca instantaneamente</p>
+    </header>
+
+    <main class="app-container">
+        <section class="controls-section">
+            
+            <div class="control-group">
+                <h3>Conteúdo</h3>
+                <label for="data-url">URL ou Texto</label>
+                <input type="text" id="data-url" value="https://eduardosonego.com/">
+                <span class="error-message" id="url-error">Este campo não pode ficar vazio.</span>
+            </div>
+
+            <div class="control-group">
+                <h3>Estilo Visual</h3>
+                <label>Escala dos Pontos</label>
+                <div class="slider-row">
+                    <input type="range" id="dots-slider" min="50" max="100" value="100">
+                    <input type="text" class="slider-value" id="dots-val" value="100" readonly>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Arredondamento dos Cantos</label>
+                <div class="slider-row">
+                    <input type="range" id="corners-slider" min="0" max="100" value="50">
+                    <input type="text" class="slider-value" id="corners-val" value="50" readonly>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Identidade (Logo)</h3>
+                <label for="logo-upload">Selecione uma imagem do seu dispositivo</label>
+                <input type="file" id="logo-upload" accept="image/png, image/jpeg, image/svg+xml">
+            </div>
+
+            <button class="primary-btn" id="generate-btn">Atualizar Previsão</button>
+
+            <hr style="border: none; border-top: 1px solid var(--border-light); width: 100%; margin: 15px 0;">
+
+            <div class="control-group">
+                <h3>Exportar e Compartilhar</h3>
+                <div class="export-row">
+                    <select id="export-format">
+                        <option value="png">.PNG (Padrão)</option>
+                        <option value="svg">.SVG (Vetor)</option>
+                        <option value="jpeg">.JPEG</option>
+                        <option value="webp">.WEBP</option>
+                    </select>
+                    <button class="primary-btn" id="download-btn">Baixar Arquivo</button>
+                </div>
+                <button class="secondary-btn" id="copy-btn">Copiar Imagem (Área de Transferência)</button>
+            </div>
+
+        </section>
+
+        <section class="preview-section">
+            <div id="qr-canvas"></div>
+        </section>
+    </main>
+
+    <script>
+        // Variável global para armazenar a imagem carregada
+        let userLogoBase64 = null;
+
+        // Inicialização Base
+        const qrCode = new QRCodeStyling({
+            width: 320,
+            height: 320,
+            data: document.getElementById("data-url").value,
+            margin: 10,
+            type: "svg", // Renderização nativa no browser via SVG para máxima nitidez
+            dotsOptions: {
+                color: "#2C4C3B",
+                type: "rounded"
+            },
+            backgroundOptions: {
+                color: "#FFFFFF", // Fundo do QR code branco garante contraste
+            },
+            cornersSquareOptions: {
+                color: "#2C4C3B", 
+                type: "extra-rounded"
+            },
+            cornersDotOptions: {
+                color: "#D07D5D", 
+                type: "dot"
+            },
+            imageOptions: {
+                crossOrigin: "anonymous",
+                margin: 8,
+                imageSize: 0.4
+            }
+        });
+
+        qrCode.append(document.getElementById("qr-canvas"));
+
+        // Eventos visuais de Interface (Sliders)
+        document.getElementById('dots-slider').addEventListener('input', function() {
+            document.getElementById('dots-val').value = this.value;
+        });
+        document.getElementById('corners-slider').addEventListener('input', function() {
+            document.getElementById('corners-val').value = this.value;
+        });
+
+        // FUNÇÃO 2: Processamento do Logo Upload
+        document.getElementById('logo-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    userLogoBase64 = event.target.result;
+                    triggerUpdate(); // Atualiza automaticamente ao subir foto
+                };
+                reader.readAsDataURL(file);
+            } else {
+                userLogoBase64 = null;
+                triggerUpdate();
+            }
+        });
+
+        // Função de Atualização Core (contém a FUNÇÃO 1: Validação)
+        function triggerUpdate() {
+            const urlInput = document.getElementById("data-url");
+            const errorMsg = document.getElementById("url-error");
+            const url = urlInput.value.trim();
+
+            // Validação de segurança
+            if (!url) {
+                urlInput.classList.add("input-error");
+                errorMsg.style.display = "block";
+                return; // Bloqueia a geração
+            } else {
+                urlInput.classList.remove("input-error");
+                errorMsg.style.display = "none";
+            }
+
+            // Pega valores matemáticos dos sliders
+            const dotScale = document.getElementById("dots-slider").value / 100;
+            const cornerVal = document.getElementById("corners-slider").value;
+            
+            let cornerType = "square";
+            if(cornerVal > 33) cornerType = "rounded";
+            if(cornerVal > 66) cornerType = "extra-rounded";
+
+            qrCode.update({
+                data: url,
+                image: userLogoBase64, // Aplica a imagem de forma dinâmica
+                dotsOptions: {
+                    type: dotScale < 0.8 ? "dots" : "rounded"
+                },
+                cornersSquareOptions: {
+                    type: cornerType
+                }
+            });
+        }
+
+        // Gatilho do botão principal
+        document.getElementById("generate-btn").addEventListener("click", triggerUpdate);
+
+        // FUNÇÃO 3: Download com escolha de formato
+        document.getElementById("download-btn").addEventListener("click", () => {
+            const extension = document.getElementById("export-format").value;
+            // Se tentar baixar sem dados, roda a validação primeiro e bloqueia
+            if (!document.getElementById("data-url").value.trim()) {
+                triggerUpdate(); 
+                return;
+            }
+            qrCode.download({ name: "meu-qr-code", extension: extension });
+        });
+
+        // FUNÇÃO 4: Copiar para Área de Transferência (Clipboard API)
+        document.getElementById("copy-btn").addEventListener("click", async () => {
+            const copyBtn = document.getElementById("copy-btn");
+            const originalText = copyBtn.innerText;
+            
+            if (!document.getElementById("data-url").value.trim()) {
+                triggerUpdate(); return;
+            }
+
+            try {
+                // A API converte o canvas para um Blob e escreve no clipboard
+                const blob = await qrCode.getRawData("png");
+                const item = new ClipboardItem({ "image/png": blob });
+                await navigator.clipboard.write([item]);
+                
+                // Feedback visual de sucesso
+                copyBtn.innerText = "Copiado com Sucesso! ✔";
+                copyBtn.style.backgroundColor = "#28a745";
+                
+                setTimeout(() => {
+                    copyBtn.innerText = originalText;
+                    copyBtn.style.backgroundColor = "";
+                }, 2500);
+
+            } catch (err) {
+                console.error("Erro no Clipboard: ", err);
+                alert("Falha ao copiar. O navegador pode não permitir acesso à área de transferência sem HTTPS.");
+            }
+        });
+    </script>
+</body>
+</html>
